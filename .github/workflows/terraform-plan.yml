@@ -21,10 +21,10 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init
-        run: terraform init terraform
+        run: terraform init terraform/
 
       - name: Terraform Format
-        run: terraform fmt -check terraform
+        run: terraform fmt -check terraform/
 
       - name: Terraform Plan
-        run: terraform plan terraform
+        run: terraform plan terraform/
