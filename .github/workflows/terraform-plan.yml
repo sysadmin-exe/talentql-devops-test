@@ -33,5 +33,8 @@ jobs:
       - name: Terraform Format
         run: terraform -chdir=./terraform/ fmt
 
+      - name: Terraform unlock
+        run: terraform force-unlock 06dda613-2ba1-7599-fe62-66c24e65877b
+
       - name: Terraform Plan
         run: terraform -chdir=./terraform/ plan 
