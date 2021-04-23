@@ -43,4 +43,5 @@ jobs:
         run: terraform -chdir=./terraform/ plan
       
       - name: Terratest
+        uses: fac/terratest-github-action@master
         run: go test -v -run TestTerraformApacheserver -timeout 30m
