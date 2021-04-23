@@ -91,6 +91,19 @@ resource "azurerm_network_security_group" "this" {
     destination_address_prefix = "*"
 
   }
+
+    security_rule {
+    name                       = "Allow_HTTP"
+    priority                   = 2000
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = 80
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+
+  }
 }
 
 
@@ -147,7 +160,7 @@ resource "azurerm_linux_virtual_machine" "this" {
   computer_name                   = var.computer_name
   admin_username                  = var.admin_username
   disable_password_authentication = true
-
+#using ssh key to access the server and not password to make the server more secure
   admin_ssh_key {
     username   = var.admin_username
     public_key = var.ssh_key
@@ -185,7 +198,7 @@ resource "azurerm_virtual_machine_extension" "this" {
 
   settings = <<SETTINGS
     {
-        "commandToExecute"           :  "apt-get -y update && apt-get install -y apache2"
+        "commandToExecute"           :  "apt-get -y update && apt-get install -y apache2 && echo "Hello World" > /var/www/html/index.html"
     }
 SETTINGS
 
