@@ -6,8 +6,15 @@ on:
 
 jobs:
   terraform:
+    name: Terraform Apply
     runs-on: ubuntu-latest
     environment: production
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
 
     env:
       ARM_CLIENT_ID: ${{secrets.TF_ARM_CLIENT_ID}}
