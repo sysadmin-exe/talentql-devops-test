@@ -35,6 +35,7 @@ jobs:
       - name: Debug
         run: |
           export PATH=$PATH:$(go env GOPATH)/bin
+          export GOPATH="/home/runner/go"
           ls
           echo ${GOPATH}
           echo ${GOROOT}
