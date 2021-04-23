@@ -44,4 +44,4 @@ jobs:
       
       - name: Terratest
         uses: fac/terratest-github-action@master
-        run: go test -v -run TestTerraformApacheserver -timeout 30m
+        #run: go test -v -run TestTerraformApacheserver -timeout 30m
