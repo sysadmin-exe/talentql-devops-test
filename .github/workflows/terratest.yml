@@ -27,11 +27,17 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.15
+          
+      - name: Debug
+        run: |
+          pwd
+          echo ${GOPATH}
+          echo ${GOROOT}
 
       # - name: Setup Dependencies
       #   working-directory: ../terratest/
       #   run:  go get -v -t -d && go mod tidy
 
-      - name: Test
-        working-directory: ../terratest/
-        run: go test -v
+      # - name: Test
+      #   working-directory: ../terratest/
+      #   run: go test -v
