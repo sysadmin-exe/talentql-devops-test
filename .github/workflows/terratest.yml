@@ -1,4 +1,4 @@
-name: Terraform Plan
+name: Terratest
 
 on:
   pull_request:
@@ -6,14 +6,9 @@ on:
 
 jobs:
   go-tests:
-    name: Run Terratest Integration Tests
+    name: Run Terratest Tests
     runs-on: ubuntu-latest
     environment: production
-
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
 
     env:
       ARM_CLIENT_ID: ${{secrets.TF_ARM_CLIENT_ID}}
@@ -25,18 +20,18 @@ jobs:
       TF_VAR_subscription_id: ${{secrets.TF_VAR_subscription_id}}
       TF_VAR_tenant_id: ${{secrets.TF_VAR_tenant_id}}
 
-
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-go@v1
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
         with:
-          go-version: 1.13
-      - uses: autero1/action-terraform@v0.1.0
-        with:
-          terraform_version: 0.12.21
-      - name: Download Go Modules
-        working-directory: test
-        run: go mod download
-      - name: Run Go Tests
+          go-version: 1.15
+
+      - name: Setup Dependencies
         working-directory: ../terratest/
-        run: go test -v 
+        run:  go get -v -t -d && go mod tidy
+
+      - name: Test
+        working-directory: ../terratest/
+        run: go test -v
