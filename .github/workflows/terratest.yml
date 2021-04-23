@@ -45,9 +45,13 @@ jobs:
       - name: Setup Dependencies
         working-directory: ../terratest/
         run: |
+          export PATH=$PATH:$(go env GOPATH)/bin
+          echo ${GOPATH}
+          echo ${GOROOT}
+          pwd
           go get -v -t -d && go mod tidy
-        env:
-          GOPATH: /home/runner/work/talentql-devops-test/go
+        # env:
+        #   GOPATH: /home/runner/work/talentql-devops-test/go
 
       # - name: Test
       #   working-directory: ../terratest/
