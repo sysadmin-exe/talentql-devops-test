@@ -8,7 +8,11 @@ jobs:
   go-tests:
     name: Run Terratest Tests
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: [1.12, 1.13]
     environment: production
+    container: golang:${{ matrix.go }}-stretch
 
     env:
       ARM_CLIENT_ID: ${{secrets.TF_ARM_CLIENT_ID}}
@@ -23,21 +27,21 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.15
-          
-      - name: Debug
-        run: |
-          pwd
-          echo ${GOPATH}
-          echo ${GOROOT}
+      # - name: Set up Go
+      #   uses: actions/setup-go@v2
+      #   with:
+      #     go-version: 1.15
 
-      # - name: Setup Dependencies
-      #   working-directory: ../terratest/
-      #   run:  go get -v -t -d && go mod tidy
+      # - name: Debug
+      #   run: |
+      #     pwd
+      #     echo ${GOPATH}
+      #     echo ${GOROOT}
 
-      # - name: Test
-      #   working-directory: ../terratest/
-      #   run: go test -v
+      - name: Setup Dependencies
+        working-directory: ../terratest/
+        run:  go get -v -t -d && go mod tidy
+
+      - name: Test
+        working-directory: ../terratest/
+        run: go test -v
