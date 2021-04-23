@@ -42,6 +42,21 @@ jobs:
       - name: Terraform Plan
         run: terraform -chdir=./terraform/ plan
       
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+        id: go
+
+      - name: Get dependencies
+        run: |
+          if [ -f Gopkg.toml ]; then
+              curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+              dep ensure
+          else
+            go get -v -d -t ./...  
+          fi
       - name: Terratest
-        uses: fac/terratest-github-action@master
-        #run: go test -v -run TestTerraformApacheserver -timeout 30m
+        working-directory: /home/runner/work/t/talentql-devops-test/terratest
+        run: sudo go test -v
+
