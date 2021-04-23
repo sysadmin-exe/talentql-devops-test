@@ -2,7 +2,8 @@ name: Terraform Apply
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - main
 
 jobs:
   terraform:
@@ -14,7 +15,6 @@ jobs:
     defaults:
       run:
         shell: bash
-
 
     env:
       ARM_CLIENT_ID: ${{secrets.TF_ARM_CLIENT_ID}}
