@@ -57,5 +57,5 @@ jobs:
             go get -v -d -t ./...  
           fi
       - name: Terratest
-        working-directory: ./talentql-devops-test/terratest/
+        working-directory: /home/runner/work/talentql-devops-test/terratest/
         run: go test -v
