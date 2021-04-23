@@ -46,7 +46,7 @@ jobs:
         run: |
           go get -v -t -d && go mod tidy
         env:
-          GOPATH: /home/runner/work/woodpecker/go
+          GOPATH: /home/runner/work/talentql-devops-test/go
 
       # - name: Test
       #   working-directory: ../terratest/
