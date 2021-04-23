@@ -17,7 +17,7 @@ terraform {
   backend "azurerm" {
     resource_group_name  = "remote-state"
     storage_account_name = "terraformlearn0702"
-    container_name       = "terraform-state"
+    container_name       = "statefilecontainer"
     key                  = "terraform.tfstate"
   }
 }
