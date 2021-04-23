@@ -58,4 +58,4 @@ jobs:
           fi
       - name: Terratest
         working-directory: /home/runner/work/talentql-devops-test/terratest/
-        run: sudo go test -v -run TestTerraformApacheserver
+        run: sudo go test -v -run .
