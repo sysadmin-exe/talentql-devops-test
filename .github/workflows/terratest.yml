@@ -24,9 +24,9 @@ jobs:
 
       - name: Check out code to a GOPATH compatible directory
         uses: actions/checkout@v1
-        # with:
-        #   fetch-depth: 1
-        #   path: go/src/github.com/laszlocph/woodpecker
+        with:
+          fetch-depth: 1
+          path: go/src/github.com/sysadmin-exe/talentql-devops-test
 
       - name: Set up Go
         uses: actions/setup-go@v2
@@ -37,16 +37,11 @@ jobs:
           pwd
           echo ${GOPATH}
           echo ${GOROOT}
-          export PATH=${PATH}:`go env GOPATH`/bin
 
-      - name: Setup Dependencies
-        working-directory: ../terratest/
-        run: |
-            export PATH=${PATH}:`go env GOPATH`/bin
-            go get -v -t -d && go mod tidy
+      # - name: Setup Dependencies
+      #   working-directory: ../terratest/
+      #   run: go get -v -t -d && go mod tidy
 
-      - name: Test
-        working-directory: ../terratest/
-        run: |
-          export PATH=${PATH}:`go env GOPATH`/bin
-          go test -v
+      # - name: Test
+      #   working-directory: ../terratest/
+      #   run: go test -v
