@@ -198,7 +198,7 @@ resource "azurerm_virtual_machine_extension" "this" {
 
   settings = <<SETTINGS
     {
-        "commandToExecute"           :  "apt-get -y update && apt-get install -y apache2 && echo "Hello World" > /var/www/html/index.html"
+        "commandToExecute"           :  "apt-get -y update && apt-get install -y apache2 && echo Hello-World > /var/www/html/index.html"
     }
 SETTINGS
 
