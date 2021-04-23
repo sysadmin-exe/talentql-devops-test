@@ -8,11 +8,7 @@ jobs:
   go-tests:
     name: Run Terratest Tests
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        go: [1.12, 1.13]
     environment: production
-    container: golang:${{ matrix.go }}-stretch
 
     env:
       ARM_CLIENT_ID: ${{secrets.TF_ARM_CLIENT_ID}}
@@ -25,23 +21,32 @@ jobs:
       TF_VAR_tenant_id: ${{secrets.TF_VAR_tenant_id}}
 
     steps:
-      - uses: actions/checkout@v2
 
-      # - name: Set up Go
-      #   uses: actions/setup-go@v2
-      #   with:
-      #     go-version: 1.15
+      - name: Check out code to a GOPATH compatible directory
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+          path: go/src/github.com/laszlocph/woodpecker
 
-      # - name: Debug
-      #   run: |
-      #     pwd
-      #     echo ${GOPATH}
-      #     echo ${GOROOT}
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.15
+      - name: Debug
+        run: |
+          pwd
+          echo ${GOPATH}
+          echo ${GOROOT}
+          export PATH=${PATH}:`go env GOPATH`/bin
 
       - name: Setup Dependencies
         working-directory: ../terratest/
-        run:  go get -v -t -d && go mod tidy
+        run: |
+            export PATH=${PATH}:`go env GOPATH`/bin
+            go get -v -t -d && go mod tidy
 
       - name: Test
         working-directory: ../terratest/
-        run: go test -v
+        run: |
+          export PATH=${PATH}:`go env GOPATH`/bin
+          go test -v
