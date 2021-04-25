@@ -10,7 +10,6 @@ env:
 branches:
   only:
     - master
-    - terraform
 
 # Install dependencies
 before_install:
@@ -25,17 +24,17 @@ jobs:
   include:
     - stage: terraform plan
       # Only run terraform validate and plan state if within a pull request
-      if: type = pull_request
+      if: type IN (pull_request)
       script:
         - echo "Executing Terraform Plan on pull request code"
-        - terraform init $tf_init_cli_options
-        - terraform validate $tf_validation_cli_options
-        - terraform plan $tf_plan_cli_options
-
+        - terraform -chdir=./terraform/ init $tf_init_cli_options
+        - terraform -chdir=./terraform/ validate $tf_validation_cli_options
+        - terraform -chdir=./terraform/ plan $tf_plan_cli_options
+        
     - stage: terraform apply
       # Only run terraform apply stage if outside of a pull request
-      if: type = push AND branch = master
+      if: type IN (push) and branch = master
       script:
         - echo "Executing Terraform Apply on merged code"
-        - terraform init $tf_init_cli_options
-        - terraform apply $tf_apply_cli_options
+        - terraform -chdir=./terraform/init $tf_init_cli_options
+        - terraform -chdir=./terraform/ apply $tf_apply_cli_options
