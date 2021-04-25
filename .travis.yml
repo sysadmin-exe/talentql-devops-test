@@ -10,6 +10,7 @@ env:
 branches:
   only:
     - master
+    - terraform
 
 # Install dependencies
 before_install:
