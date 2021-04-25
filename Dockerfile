@@ -1,6 +1,6 @@
 # Pull the base image with given version.
 ARG BUILD_TERRAFORM_VERSION="0.14.0"
-FROM microsoft/terraform-test:${BUILD_TERRAFORM_VERSION}
+FROM mcr.microsoft.com/terraform-test
 
 ARG MODULE_NAME="terraform-azurerm-template"
 
