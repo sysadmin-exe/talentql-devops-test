@@ -13,10 +13,15 @@ branches:
 
 # Install dependencies
 before_install:
+  - pwd
   - wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
+  - ls
   - unzip terraform_"$tf_version"_linux_amd64.zip
+  - ls
   - sudo mv terraform /usr/local/bin/
+  - ls /usr/local/bin/
   - rm terraform_"$tf_version"_linux_amd64.zip
+  - ls
   - terraform --version
 
 # Terraform Plan and Apply
