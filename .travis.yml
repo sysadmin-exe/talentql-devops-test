@@ -44,7 +44,7 @@ jobs:
 
     - stage: terraform apply
       # Only run terraform apply stage if outside of a pull request
-      if: type IN (push) AND branch = master
+      if: type IN (push) AND branch = main
       script:
         - echo "Executing Terraform Apply on merged code"
         - terraform -chdir=./tf/ init $tf_init_cli_options
