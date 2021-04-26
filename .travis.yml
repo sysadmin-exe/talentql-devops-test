@@ -6,7 +6,7 @@ language: bash
 
 # Export variables
 env:
-  - IMAGE_NAME=azure-module-template tf_version=0.14.0 tf_init_cli_options="-input=false" tf_validation_cli_options="" tf_plan_cli_options="-lock=false -input=false" tf_apply_cli_options="-auto-approve -input=false"
+  - tf_version=0.14.0 tf_init_cli_options="-input=false" tf_validation_cli_options="" tf_plan_cli_options="-lock=false -input=false" tf_apply_cli_options="-auto-approve -input=false"
 
 # Only build pushes to master branch
 branches:
@@ -26,7 +26,7 @@ before_install:
 # Plan only on pull requests, Apply on merged code
 jobs:
   include:
-    - stage: terraform plan and server test
+    - stage: terraform plan
       # Only run terraform validate and plan state if within a pull request
       if: type IN (pull_request)
       script:
@@ -35,7 +35,7 @@ jobs:
         - terraform -chdir=./tf/ validate $tf_validation_cli_options
         - terraform -chdir=./tf/ plan $tf_plan_cli_options
 
-    - stage: bash script test
+    - stage: server HTTP connection test
     # using bash script as last option because of go binary issues for terratest
       if: type IN (pull_request)
       provider: script
