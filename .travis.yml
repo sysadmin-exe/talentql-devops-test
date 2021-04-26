@@ -1,10 +1,15 @@
+sudo: required
+
 # Define environment
 dist: focal # Ubuntu 20.04
 language: bash
 
+services:
+  - docker
+
 # Export variables
 env:
-  - tf_version=0.14.0 tf_init_cli_options="-input=false" tf_validation_cli_options="" tf_plan_cli_options="-lock=false -input=false" tf_apply_cli_options="-auto-approve -input=false"
+  - IMAGE_NAME=azure-module-template tf_version=0.14.0 tf_init_cli_options="-input=false" tf_validation_cli_options="" tf_plan_cli_options="-lock=false -input=false" tf_apply_cli_options="-auto-approve -input=false"
 
 # Only build pushes to master branch
 branches:
@@ -32,7 +37,14 @@ jobs:
         - terraform -chdir=./tf/ init $tf_init_cli_options
         - terraform -chdir=./tf/ validate $tf_validation_cli_options
         - terraform -chdir=./tf/ plan $tf_plan_cli_options
-        
+
+    - stage: Terratest
+      if: type = pull_request
+      install: true
+      script:
+      - docker build -t ${IMAGE_NAME} --build-arg BUILD_TERRAFORM_VERSION=${tf_version} --build-arg BUILD_ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID --build-arg BUILD_ARM_CLIENT_ID=$ARM_CLIENT_ID --build-arg BUILD_ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET --build-arg BUILD_ARM_TENANT_ID=$ARM_TENANT_ID .
+      - docker run ${IMAGE_NAME} rake full
+
     - stage: terraform apply
       # Only run terraform apply stage if outside of a pull request
       if: type IN (push) and branch = master
