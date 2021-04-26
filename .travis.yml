@@ -1,5 +1,5 @@
 # Define environment
-dist: xenial # Ubuntu 16.04
+dist: focal # Ubuntu 20.04
 language: bash
 
 # Export variables
@@ -9,14 +9,16 @@ env:
 # Only build pushes to master branch
 branches:
   only:
-    - master
+    - main
 
 # Install dependencies
 before_install:
+  - curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
   - wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
   - unzip terraform_"$tf_version"_linux_amd64.zip
   - sudo mv terraform /usr/local/bin/
   - rm terraform_"$tf_version"_linux_amd64.zip
+  - terraform --version
 
 # Terraform Plan and Apply
 # Plan only on pull requests, Apply on merged code
@@ -27,14 +29,14 @@ jobs:
       if: type IN (pull_request)
       script:
         - echo "Executing Terraform Plan on pull request code"
-        - terraform -chdir=./terraform/ init $tf_init_cli_options
-        - terraform -chdir=./terraform/ validate $tf_validation_cli_options
-        - terraform -chdir=./terraform/ plan $tf_plan_cli_options
+        - terraform -chdir=./tf/ init $tf_init_cli_options
+        - terraform -chdir=./tf/ validate $tf_validation_cli_options
+        - terraform -chdir=./tf/ plan $tf_plan_cli_options
         
     - stage: terraform apply
       # Only run terraform apply stage if outside of a pull request
       if: type IN (push) and branch = master
       script:
         - echo "Executing Terraform Apply on merged code"
-        - terraform -chdir=./terraform/init $tf_init_cli_options
-        - terraform -chdir=./terraform/ apply $tf_apply_cli_options
+        - terraform -chdir=./tf/ init $tf_init_cli_options
+        - terraform -chdir=./tf/ apply $tf_apply_cli_options
