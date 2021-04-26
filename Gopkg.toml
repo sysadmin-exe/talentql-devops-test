@@ -25,9 +25,9 @@
 #   unused-packages = true
 
 
-#[[constraint]]
-#  name = "github.com/gruntwork-io/terratest"
-#  version = "0.9.15"
+[[constraint]]
+  name = "github.com/gruntwork-io/terratest"
+  version = "0.14.4"
 
 [prune]
   go-tests = true
