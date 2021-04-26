@@ -96,12 +96,6 @@ variable "admin_username" {
 variable "ssh_key" {
   description = "ssh public to login to the VM"
   type        = string
-  default     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDL0aH6Gc5FheGfwCI1pW/Zo1KEkqQcHe3ODaA9wMgnlQ6vOdA4chOVHWHIIJuMNKVoQ6oaE2XjDRMNNq4QXhpo8ssiJc4DS//D5ckJbej5YsQGMt4Bhn9JV3tSAY7RASzip9FAIbAu82QCUkM3DsKKu9yDSLjP3sa088riGjR2atlMiERoSL6dCOhUeUco1C0EF1JiVHIk0ZksPEVJ0J5YC8PCH3lphMpmAi/irle0jbLx4jFXy9RliYY5W7BBGVJ+b+rAqwRmSgYUHDXkQjsfXXIp3564C4RjYeo0kpUYqGhvQnbpiw18xx1spHaaa471miHRHAR3knTN/npObS35uLXzpMTbp+mJc8O/O/sCyakngA1SwobMxQcC3MUUx3xYPhnumnDYLL3Am+c0DX6sUN3yyhH1BBjkEwAFV0WiXONJBom1ktit326yLxysMAn31FKSS3AkafQH7kgVyk1DO/63MBVaO55Y/Qcz3+Xez3tobELnzAjsoEMmuMg7SZ0= victorefedi@Victors-MacBook-Pro.local"
-}
-variable "admin_password" {
-  description = "Password to login to the VM"
-  type        = string
-  default     = "P@$$w0rD2020*"
 }
 
 variable "os_disk_caching" {

@@ -34,7 +34,6 @@ jobs:
         - terraform -chdir=./tf/ init $tf_init_cli_options
         - terraform -chdir=./tf/ validate $tf_validation_cli_options
         - terraform -chdir=./tf/ plan $tf_plan_cli_options
-        - bash ./server-con-test.sh
 
     # - stage: Terratest
     #   if: type IN (pull_request)
@@ -43,11 +42,12 @@ jobs:
     #   - docker build -t ${IMAGE_NAME} --build-arg BUILD_TERRAFORM_VERSION=${tf_version} --build-arg BUILD_ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID --build-arg BUILD_ARM_CLIENT_ID=$ARM_CLIENT_ID --build-arg BUILD_ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET --build-arg BUILD_ARM_TENANT_ID=$ARM_TENANT_ID .
     #   - docker run ${IMAGE_NAME} rake full
 
-    # - stage: bash script test
-    # #using bash script as last option because of go binary issues for terratest
-    #   if: type IN (pull_request)
-    #   provider: script
-    #   script: bash server-con-test.sh
+    - stage: bash script test
+    # using bash script as last option because of go binary issues for terratest
+      if: type IN (pull_request)
+      provider: script
+      script: 
+        - bash server-con-test.sh
 
     - stage: terraform apply
       # Only run terraform apply stage if outside of a pull request
