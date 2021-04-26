@@ -1,10 +1,12 @@
+sudo: required
+
 # Define environment
 dist: focal # Ubuntu 20.04
 language: bash
 
 services:
   - docker
-  
+
 # Export variables
 env:
   - IMAGE_NAME=azure-module-template tf_version=0.14.0 tf_init_cli_options="-input=false" tf_validation_cli_options="" tf_plan_cli_options="-lock=false -input=false" tf_apply_cli_options="-auto-approve -input=false"
