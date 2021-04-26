@@ -39,3 +39,4 @@ fi
 # #terraform destroy the resources
 terraform -chdir=./tf/ init
 terraform -chdir=./tf/ destroy  --auto-approve
+rm output
