@@ -14,12 +14,12 @@ terraform {
     }
   }
 
-  # backend "azurerm" {
-  #   resource_group_name  = "remote-state"
-  #   storage_account_name = "terraformlearn0702"
-  #   container_name       = "statefilecontainer4"
-  #   key                  = "terraform.tfstate"
-  # }
+  backend "azurerm" {
+    resource_group_name  = "remote-state"
+    storage_account_name = "terraformlearn0702"
+    container_name       = "statefilecontainer4"
+    key                  = "terraform.tfstate"
+  }
 }
 
 #
