@@ -1,5 +1,4 @@
-# talentql-devops-test
-This is submission for talentql assessment
+# TERRAFORM CICD
 
 The pipeline here is set to do and plan and resource connectivity test on PR to Master. If plan or test fails the build in the PR fails and code in PR should be reviewed. 
 
